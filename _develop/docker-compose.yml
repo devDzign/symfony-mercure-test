@@ -1,0 +1,72 @@
+version: "3"
+
+services:
+    st_web:
+        build: ./config/dockerfiles/nginx
+        image: nginx
+        container_name: st_web
+        volumes:
+        - ./../symfony:/var/www/vhosts/symfony
+        - ./config/site.conf:/etc/nginx/conf.d/site.conf
+        - ./nginx/log:/var/log/nginx
+        depends_on:
+        - st_php
+        expose:
+        - 80
+        environment:
+            VIRTUAL_HOST: ${VIRTUAL_HOST}
+        restart: on-failure:10
+
+    st_php:
+        build: ./config/dockerfiles/php/dev
+        image: php:7.2-fpm
+        container_name: st_php72
+        volumes:
+        - ./../symfony:/var/www/vhosts/symfony
+        - ./profiler:/tmp/xdebug
+        - /etc/localtime:/etc/localtime
+        extra_hosts:
+        - "${VIRTUAL_HOST}:${NGINX_PROXY_IP}"
+        environment:
+            XDEBUG_CONFIG: remote_host=${NGINX_PROXY_IP}
+        working_dir: /var/www/vhosts/symfony/
+        restart: on-failure:10
+        depends_on:
+        - st_mysql
+
+    st_mysql:
+        image: mysql:5.7
+        container_name: st_mysql
+        environment:
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        expose:
+        - 3306
+        ports:
+        - "3305:3306"
+        volumes:
+        - ./data-mysql:/var/lib/mysql
+
+    st_fakesmtp:
+        build: ./config/dockerfiles/fakesmtp
+        container_name: st_fakesmtp
+        image: munkyboy/fakesmtp
+        volumes:
+        - ./fakesmtp/:/var/mail
+        ports:
+        - "2525:25"
+
+    nginx-proxy:
+        image: jwilder/nginx-proxy
+        container_name: nginx-proxy
+        ports:
+        - "80:80"
+        volumes:
+        - /var/run/docker.sock:/tmp/docker.sock:ro
+
+networks:
+    default:
+        external:
+            name: nginx-proxy
