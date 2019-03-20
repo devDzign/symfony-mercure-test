@@ -1,8 +1,8 @@
 #!/bin/bash
 
-docker exec -it pt_php72 php bin/console doctrine:cache:clear-metadata
-docker exec -it pt_php72 php bin/console doctrine:cache:clear-query
-docker exec -it pt_php72 php bin/console doctrine:cache:clear-result
+php bin/console doctrine:cache:clear-metadata
+php bin/console doctrine:cache:clear-query
+php bin/console doctrine:cache:clear-result
 
 echo "Clear cache ...";
 rm -R var/cache/*
