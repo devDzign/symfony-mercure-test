@@ -53,9 +53,9 @@ class PublishController
     public function testReceive()
     {
         return new Response(
-            '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Mercury subscriber</title></head>
+            '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Mercure subscriber</title></head>
 
-            <body><h1>Mercury subscriber</h1><div id="output" style="border:1px solid black; overflow:scroll; height: 250px;"></div>
+            <body><h1>Mercure subscriber</h1><div id="output" style="border:1px solid black; overflow:scroll; height: 250px;"></div>
             
             <script type="text/javascript">
             const es = new EventSource(\'http://symfonytests.lh:3000/hub?topic=\' + encodeURIComponent(\'test/1\'));
