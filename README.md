@@ -1,9 +1,38 @@
 # Symfony test project
 
+## Docker network configuration
+
+Create network from dedicated local ip
+* If the network uses this ip then select others (eg 172.255.0.1 or similar)
+``` 
+docker network create nginx-proxy --subnet=172.18.0.0/16 --gateway=172.18.0.1
+```
+
+Inspect network
+``` 
+docker network inspect nginx-proxy
+```
+Add to /ete/hosts IP gateway
+* Also change the IP gateway in the .env file NGINX_PROXY_IP=172.18.0.1 
+``` 
+sudo echo "172.18.0.1 symfonytests.lh" >> /etc/hosts
+```
+
+## First run
+1. Copy .env.disc to **.env** in **_develop** folder.
+2. Copy .env to **.env.local** in **symfony** folder.
+```cp .env .env.local```
+3. Update **MERCURE_PUBLISH_URL** and **MERCURE_JWT_SECRET**.  
+Remember to have the same values in .env and in jwt.io key generator.
+
+4. ```composer install```
+
 ## Testing
 
-1. Open http://symfonytests.lh/test/publish
-2. Now open http://symfonytests.lh/test/receive and 
+1. Open http://symfonytests.lh/test/receive 
+2. Now open in the new windows http://symfonytests.lh/test/publish to send new message.
+3. Look at the first window for response.
+
 ## Generate new JWT Key:
 
 You must change **your-256-bit-secret** to your secret provided in **_develop/.env**
