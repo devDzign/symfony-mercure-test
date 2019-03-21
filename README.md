@@ -29,9 +29,10 @@ Remember to have the same values in .env and in jwt.io key generator.
 
 ## Testing
 
-1. Open http://symfonytests.lh/test/receive 
-2. Now open in the new windows http://symfonytests.lh/test/publish to send new message.
-3. Look at the first window for response.
+1. Open http://symfonytests.lh/test/receive/1 for authenticated subscriber.
+2. Open second window/new tab http://symfonytests.lh/test/receive
+3. Now open in the new tab http://symfonytests.lh/test/publish to sending new message.
+5. Look at the first window for response and no messages at the second tab.
 
 ## Generate new JWT Key:
 
