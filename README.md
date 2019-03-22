@@ -1,4 +1,4 @@
-# Symfony test project
+# Symfony Mercure test project
 
 ## Docker network configuration
 
@@ -19,20 +19,21 @@ sudo echo "172.18.0.1 symfonytests.lh" >> /etc/hosts
 ```
 
 ## First run
-1. Copy .env.disc to **.env** in **_develop** folder.
+1. Copy .env.disc to **.env** in **_develop** folder. and change ports to your requirments.
 2. Copy .env to **.env.local** in **symfony** folder.
 ```cp .env .env.local```
 3. Update **MERCURE_PUBLISH_URL** and **MERCURE_JWT_SECRET**.  
 Remember to have the same values in .env and in jwt.io key generator.
-
-4. ```composer install```
+4. ```docker-compose build```
+5. ```docker-compose up -d```
+6. ```composer install```
 
 ## Testing
 
-1. Open http://symfonytests.lh/test/receive/1 for authenticated subscriber.
-2. Open second window/new tab http://symfonytests.lh/test/receive
-3. Now open in the new tab http://symfonytests.lh/test/publish to sending new message.
-5. Look at the first window for response and no messages at the second tab.
+1. Open http://symfonytests.lh/test/cookie to set cookie.
+2. Open http://symfonytests.lh/test/receive to wait for new messages.
+3. Now open in the new tab http://symfonytests.lh/test/publish to send new message.
+5. Look at the first window for response.
 
 ## Generate new JWT Key:
 
