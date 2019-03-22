@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use DateTime;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -49,23 +48,13 @@ class PublishController extends AbstractController
     /**
      * @Route(
      *     name="test_receive",
-     *     path="test/receive/{auth}",
-     *     requirements={"auth"="0|1"},
-     *     defaults={"auth"=0}
+     *     path="test/receive"
      * )
-     *
-     * @param int $auth
      *
      * @return Response
      */
-    public function testReceive(int $auth): Response
+    public function testReceive(): Response
     {
-        $headers = '';
-        if ($auth)
-        {
-            $headers = "headers: {'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtZXJjdXJlIjp7InN1YnNjcmliZSI6WyJodHRwOlwvXC9leGFtcGxlLmNvbVwvdXNlclwvdGVzdFVzZXIiXX19.ITmbjNIoLgo4PhXN-XKSpSZkjLmhMQfde_2RpepxYiA'}";
-        }
-
         $html = <<<HTML
             <!doctype html>
             <html lang="en">
